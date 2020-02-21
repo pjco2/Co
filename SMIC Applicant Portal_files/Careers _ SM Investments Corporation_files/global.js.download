@@ -1,0 +1,572 @@
+jQuery(function($) {
+      //navbar offset
+    //   $(document).ready(function(){
+
+    //     $("#homepage_video").get(0).play();   
+    // });
+
+/*     $(".sdg-wrapper").bind('mouseenter mouseleave', function(){
+      $('.sdg-wrapper').removeClass('tsug');
+      $(this).addClass('tsug');
+    }); */
+
+    // var tbody = $('#block-views-96ea095b60d698123b9942badde83d52 table tbody');
+    // tbody.html($('tr',tbody).get().reverse());
+
+    /*SM Investments Career - Redirect*/
+    $('.careers-405').attr('href', 'https://careers.sminvestments.com/smic_recruitment/career_page.php');
+    $('.careers-405').attr('target', '_blank');
+
+    $('#edit-submitted-to').attr('readonly', 'readonly');
+    
+    $(window).scroll(function (event) {
+        var $hei = $(".smic-inside-banner").height() + 120;
+        var $scr = $(window).scrollTop();
+        if($scr >= $hei){
+            return $(".inside-side-nav .block-menu-block").addClass('active');
+        }
+        if($scr < $hei){
+            return $(".inside-side-nav .block-menu-block").removeClass('active');
+        }
+    });
+
+    $('.sdg-wrapper').mouseenter(function () { 
+      // $('.sdg-wrapper').removeClass('tsug');
+      $(this).addClass('tsug');
+    });
+    
+    $('.sdg-wrapper').mouseleave(function () { 
+      
+      $(this).removeClass('tsug');
+    });
+
+    /*Sustainability - Communities Tab Click*/
+    $(".page-node-11023 #closerLook .link").on('click', function(e){
+        e.preventDefault();
+        var tab = $(this).attr('href');
+        $('.communities_list .'+tab).click();
+    });
+
+
+
+    $('.page-node-11023 .slick_closer_look').slick({
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 1000,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+            }
+          },
+          {
+            breakpoint: 580,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            }
+          }
+        ]
+    });
+
+    $(".view-display-id-sustainability_stories_sidebar .views-field-title a.active").parent().find(".views-row").css("display", "none")
+
+    var nid_releases = $('body').hasClass('node-type-company-releases'),
+        nid_news = $('body').hasClass('node-type-media-news'),
+        nid_boolean = (nid_releases == true)? nid_true(): 
+                      (nid_news == true)? nid_true():nid_false();
+
+    function nid_false(){
+        $(window).scroll(function () {
+            navbarBackground();
+         });
+    }
+
+    function nid_true(){
+        $(".smic-navbar-inside").addClass("smic-active");
+        $(".smic-navbar-inside .navbar-brand img").attr("src", "/sites/all/themes/smic/images/smic-logo.png");
+    }
+
+    if($(window).width() < 992){  
+        $(".navbar-collapse.collapse").removeAttr("class");
+        $("#navbar").addClass('collapse');
+    };
+
+    $('.dropdown').on('show.bs.dropdown', function() {
+        $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+      });
+
+      // Add slideUp animation to Bootstrap dropdown when collapsing.
+      $('.dropdown').on('hide.bs.dropdown', function() {
+        $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+      });
+      
+    $(".smic-inside-caret").on("click", function() {
+        $("html, body").animate({ scrollTop: $('.smic-inside-section').offset().top - 80 }, 800);
+        return false;
+    });
+
+    if(window.location.pathname == "/"){
+
+        jQuery("#homepage_video").get(0).play(); 
+    }
+
+    //BOD split chars
+    var split = $('.board-directors-container').find('a');
+   
+   //yuck, hardcoded
+    $('.page-node-7 #tablefield-0 tbody > tr:nth-of-type(2)').on("click", function(){
+
+        //window.open("/sites/default/files/governance/RPT Policy SMIC 2017.pdf");
+        window.open("/sites/default/files/governance/Related Party Transactions.pdf");
+    });
+
+    $('.page-node-7 #tablefield-0 tbody > tr:nth-of-type(4)').on("click", function(){
+
+        window.open("/sites/default/files/governance/GUIDELINES ON GIFTS AND HOSPITALITY.pdf");
+    });
+
+    $('.page-node-7 #tablefield-0 tbody > tr:last-of-type').on("click", function(){
+
+        window.open("/sites/default/files/governance/Alternative Dispute Resolution System.pdf");
+    });
+
+
+    //Disable exposed filter any/year first option
+    $('.views-exposed-form select option:first').attr("disabled", "disabled");
+
+    // counter
+    // $('.smic-counter').each(function () {
+    //     $(this).prop('Counter', 0).animate({
+    //         Counter: $(this).text()
+    //     }, {
+    //         duration: 2000,
+    //         easing: 'swing',
+    //         step: function (now) {
+    //             $(this).text(Math.round(now * 10) / 10);
+    //         }
+    //     });
+    // });
+
+
+    /*Modify First Media Filter Option*/
+    $(".page-node-54 #edit-field-business-value option:first").val("All");
+    $("#edit-field-date-value-value-year option:first").text("Year");
+    $("#edit-field-year-value-value-year option:first").text("Year");
+    $("#edit-field-financial-reports-datetype-value option:first").text("All");
+
+    /*June 29 2018 | Media - Videos, Fancybox rediect to artilce*/
+    $(".page-node-54 #block-views-media-views-block-1 a").on("click", function(e){
+        if($(this).data('fancybox') !== undefined) {
+            if($(this).data('ltype') == 'article') {
+                e.preventDefault();
+                window.open($(this).attr('href'), "_blank");
+            }
+        }
+    });
+
+    // wow 
+    new WOW().init();
+
+    /*Front Page Circle Progress*/
+    $('.front .circle').each(function (key, value) {
+        var base = $(this).data('base_number');
+        var value = $(this).data('value_number');
+        var percentage = (value / base);
+
+        $(this).circleProgress({
+            value: percentage,
+            startAngle: 4.65,
+            size: 140,
+            thickness: 5,
+            fill: {
+                gradient: ['#0e2987']//['#03aeed']
+            }
+        });
+    });
+
+    $('.front .smic-homepage-second-stack a:last-of-type').waypoint(function(direction){
+        
+        $('.front .smic-counter').each(function () {
+           $(this).prop('Counter',0).animate({
+               Counter: $(this).text()
+           }, {
+               duration: 4000,
+               easing: 'swing',
+               step: function (now) {
+                   $(this).text(Math.ceil(now));
+               }
+           });
+        });
+
+        //$('.front .smic-counter').counterUp();
+
+        this.destroy();
+    }, {triggerOnce: true});
+
+    
+	/*Front Page Circle Progress*/
+
+	/*Main menu dropdown on hover*/
+   /* $('#navbar .menu .expanded').on('mouseover', function(e){
+        $(this).addClass("open")
+    });
+
+    $('#navbar .menu .expanded').on('mouseleave', function(e){
+        $(this).removeClass("open")
+    });*/
+    //homepage footprints at scale select
+
+    $('#footprint_select').on('change', function(){
+        $('.smic-homepage-fourth-stack .smic-hfs-right').each(function(){
+            $(this).addClass('hide');
+        });
+        $('.smic-homepage-fourth-stack div#' + $(this).val()).removeClass('hide');
+    });
+
+    
+
+    //remove footer `nav` class
+    $('footer .smic-footer-bottom-container .smic-fb-right .smic-fb-navlink ul').removeClass('nav');    
+    
+    /*Footer Menu remove dropdown*/
+	$('.footer .menu .expanded a span').removeClass("caret");
+
+    // Homepage Navigation ===============
+    function navbarFixed() {
+        var st = $(window).scrollTop();
+        var wh = window.innerHeight;
+        var mainNav = $("nav.navbar");
+        // console.log(st+' '+wh);
+        if (st >= 111) {
+            $(".smic-logo").css('opacity', 0);
+            $(".smic-logo-fixed").addClass('fadeInUp');
+            $("nav.smic-navbar").css("background" , "#ffffff");
+            $("nav.smic-navbar .nav-item .nav-link").css("color" , "#282828");
+            $("nav.smic-navbar .navbar-header .smic-toggle").css("border","1px solid rgba(34,53,109,1)");
+            $("nav.smic-navbar .navbar-header .smic-toggle .icon-bar").css("border","1px solid rgba(34,53,109,1)");
+        }else {
+            $(".smic-logo").css("opacity", 1);
+            $(".smic-logo-fixed").removeClass('fadeInUp');
+            $("nav.smic-navbar").css("background" , "#22356d");
+            $("nav.smic-navbar .nav-item .nav-link").css("color" , "#ffffff");
+            $("nav.smic-navbar .navbar-header .smic-toggle").css("border","1px solid rgba(255,255,255,1)");
+            $("nav.smic-navbar .navbar-header .smic-toggle .icon-bar").css("border","1px solid rgba(255,255,255,1)");
+        }
+    }
+
+    $(window).scroll(function() {
+        navbarFixed();
+    });
+    // Homepage Navigation ===============
+
+    // Homepage Banner ===============
+    $(".divider").addClass("window-up");
+    // Homepage Banner ===============
+
+    /*Slick*/
+    /*Updated Sustainability - Special Features Homepage*/
+
+    $(".view-display-id-sustainability_special_features .view-content").slick({
+        infinite: true,
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        autoplay: true,
+        autoplaySpeed: 3500,
+        speed: 1000,
+    });
+
+    $(".view-special-feature-sustainability-stories .view-content").slick({
+        infinite: true,
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        autoplay: true,
+        autoplaySpeed: 3500,
+        speed: 1000,
+    });
+
+    /*Discover more on sustainability*/
+    $(".view-display-id-discover_more_sustainability .slickme, .view-display-id-discover_more_sustainability_staging .slickme").slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        // dots: true,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+            }
+          },
+          {
+            breakpoint: 580,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            }
+          }
+        ]
+    });
+
+
+    $('.smic-slick').slick({
+        infinite: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+         responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 580,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          }
+        }
+      ]
+    });
+    $(".smic-slick-history").slick({
+        infinite: false,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        accessibility: false,
+        responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 580,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          }
+        }
+      ]
+    });
+
+    function actSlick() {
+        var yearCurrent = $(".smic-slick-history")
+            .find(".slick-current .history-description h2")
+            .text()
+            .substring(0, 4);
+        console.log(yearCurrent);
+
+        $(".history-description").removeClass("active");
+        $(".slick-current .history-description").addClass("active");
+
+        $(".smic-timeline-year").removeClass("active");
+        $('.' + yearCurrent).addClass('active');
+    }
+
+    $('.smic-slick-history').on('afterChange', function () {
+        actSlick();
+    });
+
+    $(".smic-slick-previous").on("click", function () {
+        $(".slick-prev").trigger('click');
+        actSlick();
+    });
+
+    $(".smic-slick-next").on("click", function () {
+        $(".slick-next").trigger("click");
+        actSlick();
+    });
+
+    // Inside Navigation ===============
+    function navbarBackground() {
+        var st = $(window).scrollTop();
+        if (st >= 100) {
+            $(".smic-navbar-inside").addClass("smic-active");
+            $(".smic-navbar-inside .navbar-brand img").attr("src", "/sites/all/themes/smic/images/smic-logo.png");
+        } else {
+            $(".smic-navbar-inside").removeClass("smic-active");
+            $(".smic-navbar-inside .navbar-brand img").attr("src", "/sites/all/themes/smic/images/smic-logo-white.png");
+        }
+    }
+
+   
+   
+    // $(window).scroll(function() {
+    // var hT = $(".smic-inside-section").offset().top,
+    //     hH = $(".smic-inside-section").outerHeight(),
+    //     wH = $(window).height(),
+    //     wS = $(this).scrollTop();
+    //     // console.log(hT - wH, wS);
+    // if (wS > hT + hH - wH) {
+    //     // alert("you have scrolled to the h1!");
+    //     $('.smic-navbar-inside').addClass('smic-active');
+    //     console.log('active');
+    //     $(".smic-navbar-inside .navbar-brand img").attr("src", "https://kestrel.ph/staging/sminvestments2/sites/all/themes/smic/images/smic-logo.png");
+    // }else {
+    //     $('.smic-navbar-inside').removeClass('smic-active');
+    //     $(".smic-navbar-inside .navbar-brand img").attr("src", "https://kestrel.ph/staging/sminvestments2/sites/all/themes/smic/images/smic-logo-white.png");
+    // }
+    // });
+    // Inside Navigation ===============
+
+    $( document ).ready(function() {    
+        //bug? missing input from search
+        //$('#search-block-form h2.element-invisible').after("<div class='input-group'><input title='Enter the terms you wish to search for.' placeholder='Search' class='form-control form-text' type='text' id='edit-search-block-form--2' name='search_block_form' value='' size='15' maxlength='128'><span class='input-group-btn'><button type='submit' class='btn btn-primary'><span class='icon glyphicon glyphicon-search' aria-hidden='true'></span></button></span></div>");
+    });
+
+    $(".btt").on("click", function () {
+        $("html, body").animate({ scrollTop: 0 }, 800);
+        return false;
+    });
+
+    $("#searchBtn").on("click", function () {
+        $(".input-group-btn button.btn").trigger("click");
+    });
+
+    // Social Media Share
+    $('#social_media_button .social_share').on('click', function(){
+
+        var winHeight = 720;
+        var winWidth = 1080;
+        var winTop = (screen.height / 2) - (winHeight / 2);
+        var winLeft = (screen.width / 2) - (winWidth / 2);
+        var title = $(this).data('title');
+        var link = $(this).data('link');
+        var app = $(this).data('app');
+
+        if(app == 'facebook'){
+            window.open('http://www.facebook.com/sharer.php?s=100&p[title]=' + title + '&p[url]=' + link, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width='+winWidth+',height='+winHeight);
+        }else if(app == 'twitter'){
+            console.log(link);
+            window.open('https://twitter.com/intent/tweet?url=' + 'http://'+link,'','top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width='+winWidth+',height='+winHeight);
+            //window.open('http://twitter.com/share?url='+ link + '', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width='+winWidth+',height='+winHeight);
+        }
+    });
+
+    var getQueryString = function ( field, url ) {
+        var href = url ? url : window.location.href;
+        var reg = new RegExp( '[?&]' + field + '=([^&#]*)', 'i' );
+        var string = reg.exec(href);
+        return string ? string[1] : null;
+    };
+
+    // Careers change Subject
+    if(window.location.pathname == "/careers-form"){
+
+        var subjectValue = getQueryString("career");
+        //$(".page-node-347 #edit-submitted-subject").val("Application to " + decodeURI(subjectValue));
+        document.getElementById("edit-submitted-subject").value = "Application to " + decodeURI(subjectValue);
+
+        //Careers Change Company - hidden field
+        var companyValue = getQueryString("company");
+        //$(".page-node-347 #edit-submitted-company").val(decodeURI(companyValue));
+        document.getElementById("edit-submitted-company").value = decodeURI(companyValue);
+
+        if(companyValue == 'bdo'){
+            $('.page-node-347 .webform-component--region--island').show();
+        }else{
+            $('.page-node-347 .webform-component--region--island').hide();
+        }
+
+
+        switch(companyValue){
+
+            case "chinabank":
+                document.getElementById("edit-submitted-to").value = "careers@chinabank.ph";
+                break;
+            case "prime":
+                document.getElementById("edit-submitted-to").value = "careers@smprime.com";
+                break;
+            case "retail":
+                document.getElementById("edit-submitted-to").value = "corporaterecruitment.sm.ho@smretail.com";
+                break;
+            case "foundation":
+            case "smic":
+                document.getElementById("edit-submitted-to").value = "smicrecruitment@sminvestments.com";
+                break;
+            default:
+                break;
+        }
+    }
+
+    //Awards Fancybox
+    $('.page-node-31 .award-container').on('click',function(){
+    
+    var container = $(this).parent().find('.award-container-hidden').html();
+       
+        $.fancybox.open({
+            src  : container,
+            type : 'inline',
+            // opts : {
+            //   afterShow : function( instance, current ) {
+            //     console.info( 'done!' );
+            //   }
+            // }
+        });
+    });
+
+    $('.history-container').on('click',function(){
+    
+    var container = $(this).parent().find('.history-container-hidden').html();
+       
+        $.fancybox.open({
+            src  : container,
+            type : 'inline',
+            // opts : {
+            //   afterShow : function( instance, current ) {
+            //     console.info( 'done!' );
+            //   }
+            // }
+        });
+    });
+
+
+});
+
+(function($) {//function for ajax
+  jQuery( document ).ajaxStop(function() {
+
+    //Awards Fancybox
+    $('.page-node-31 .award-container').on('click',function(){
+
+    var container = $(this).parent().find('.award-container-hidden').html();
+       
+        $.fancybox.open({
+            src  : container,
+            type : 'inline',
+            // opts : {
+            //   afterShow : function( instance, current ) {
+            //     console.info( 'done!' );
+            //   }
+            // }
+        });
+    });
+
+    $('.history-container').on('click',function(){
+    
+    var container = $(this).parent().find('.history-container-hidden').html();
+       
+        $.fancybox.open({
+            src  : container,
+            type : 'inline',
+            // opts : {
+            //   afterShow : function( instance, current ) {
+            //     console.info( 'done!' );
+            //   }
+            // }
+        });
+    });
+    
+  }); 
+})(jQuery);
